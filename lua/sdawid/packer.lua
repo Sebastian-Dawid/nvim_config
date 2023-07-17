@@ -21,7 +21,7 @@ return require('packer').startup(function(use)
                 background = "hard",
                 transparent_background_level=1,
                 italics=true,
-                disable_italic_comments=false,
+                disable_italic_comments=true,
                 sign_column_background="none",
                 ui_contrast="low",
                 dim_inactive_windows=false,
