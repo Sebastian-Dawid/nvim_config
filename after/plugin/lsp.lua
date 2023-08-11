@@ -27,7 +27,8 @@ lsp.on_attach(function(client, bufnr)
 
 	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-	vim.keymap.set("n", "<leader>lws", function() vim.lsp.buf.worspace_symbol() end, opts)
+	vim.keymap.set("n", "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", opts)
+    vim.keymap.set("n", "<leader>lws", "<cmd>Telescope lsp_workspace_symbols<cr>", opts)
 	vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end, opts)
 	vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
 	vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
@@ -38,6 +39,9 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+require('lspconfig').clangd.setup({
+    cmd = { "clangd", "--header-insertion=never" }
+})
 require('lspconfig').glslls.setup{}
 
 lsp.setup()
