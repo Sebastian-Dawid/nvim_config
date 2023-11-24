@@ -5,5 +5,5 @@ require("toggleterm").setup({
     shade_terminals = true,
     shading_factor = 0.6,
     direction = 'float',
-    shell = 'nu',
+    shell = 'zsh',
 })
