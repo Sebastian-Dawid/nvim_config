@@ -2,6 +2,7 @@ require("sdawid")
 vim.filetype.add({ extension = { hip = 'cpp' } })
 vim.filetype.add({ extension = { vert = 'glsl' } })
 vim.filetype.add({ extension = { frag = 'glsl' } })
+vim.filetype.add({ extension = { comp = 'glsl' } })
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -133,6 +134,36 @@ require('lazy').setup({
 
     {'akinsho/toggleterm.nvim', version = "*", config = true},
 
+    {
+        "toppair/peek.nvim",
+        event = { "VeryLazy" },
+        build = "deno task --quiet build:fast",
+        config = function()
+            require("peek").setup()
+            -- refer to `configuration to change defaults`
+            vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+            vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+        end,
+    },
+
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        }
+    },
+
+    {
+        "kdheepak/lazygit.nvim",
+        -- optional for floating window border decoration
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+    },
+
     require 'sdawid.plugins.debug'
 }, {})
 
@@ -178,6 +209,9 @@ local on_attach = function(_, bufnr)
     nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
     nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
     nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+    nmap(']d', vim.diagnostic.goto_next, 'Next [D]iagnostic')
+    nmap('[d', vim.diagnostic.goto_prev, 'Prev [D]iagnostic')
 
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
@@ -239,6 +273,8 @@ mason_lspconfig.setup_handlers {
     end
 }
 
+require('lspconfig').glsl_analyzer.setup{}
+
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
@@ -298,4 +334,5 @@ require('toggleterm').setup({
     shell = 'zsh',
 })
 
+vim.g.zig_fmt_autosave = 0
 vim.cmd.colorscheme('everforest')

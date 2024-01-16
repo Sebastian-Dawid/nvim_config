@@ -11,6 +11,7 @@ return {
 
         -- Add your own debuggers here
         'leoluz/nvim-dap-go',
+        'vadimcn/codelldb',
     },
     config = function()
         local dap = require('dap')
@@ -19,8 +20,28 @@ return {
         require('mason-nvim-dap').setup({
             automatic_setup = true,
             handlers = {},
-            ensure_installed = { 'codelldb' }
+            ensure_installed = {}
         })
+
+        dapui.setup()
+        dap.listeners.after.event_initialized["dapui_config"] = function()
+            dapui.open()
+        end
+        dap.listeners.before.event_terminated["dapui_config"] = function()
+            dapui.close()
+        end
+        dap.listeners.before.event_exited["dapui_config"] = function()
+            dapui.close()
+        end
+
+        dap.adapters.codelldb = {
+            type = 'server',
+            port = "${port}",
+            executable = {
+                command = '/home/sdawid/.local/share/nvim/mason/bin/codelldb',
+                args = {"--port", "${port}"},
+            }
+        }
 
         vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
         vim.keymap.set('n', '<F10>', dap.step_into, { desc = 'Debug: Step Into' })
