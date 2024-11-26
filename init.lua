@@ -4,6 +4,34 @@ vim.filetype.add({ extension = { vert = 'glsl' } })
 vim.filetype.add({ extension = { frag = 'glsl' } })
 vim.filetype.add({ extension = { comp = 'glsl' } })
 
+local colors = {
+    blue   = '#80a0ff',
+    cyan   = '#79dac8',
+    black  = '#080808',
+    white  = '#c6c6c6',
+    red    = '#ff5189',
+    violet = '#d183e8',
+    grey   = '#303030',
+}
+
+local bubbles_theme = {
+    normal = {
+        a = { fg = colors.black, bg = colors.violet },
+        b = { fg = colors.white, bg = colors.grey },
+        c = { fg = colors.white },
+    },
+
+    insert = { a = { fg = colors.black, bg = colors.blue } },
+    visual = { a = { fg = colors.black, bg = colors.cyan } },
+    replace = { a = { fg = colors.black, bg = colors.red } },
+
+    inactive = {
+        a = { fg = colors.white, bg = colors.black },
+        b = { fg = colors.white, bg = colors.black },
+        c = { fg = colors.white },
+    },
+}
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system {
@@ -74,20 +102,7 @@ require('lazy').setup({
     },
 
     require 'sdawid.plugins.gitsigns',
-
-    {
-        -- Set lualine as statusline
-        'nvim-lualine/lualine.nvim',
-        -- See `:help lualine.txt`
-        opts = {
-            options = {
-                icons_enabled = false,
-                theme = 'everforest',
-                component_separators = '|',
-                section_separators = '',
-            },
-        },
-    },
+    require 'sdawid.plugins.lualine',
 
     -- "gc" to comment visual regions/lines
     { 'numToStr/Comment.nvim', opts = {} },
@@ -132,20 +147,6 @@ require('lazy').setup({
         opts = {},
     },
 
-    {'akinsho/toggleterm.nvim', version = "*", config = true},
-
-    {
-        "toppair/peek.nvim",
-        event = { "VeryLazy" },
-        build = "deno task --quiet build:fast",
-        config = function()
-            require("peek").setup()
-            -- refer to `configuration to change defaults`
-            vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
-            vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
-        end,
-    },
-
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -169,9 +170,7 @@ require('lazy').setup({
 
 vim.keymap.set('n', '<leader>pf', require('telescope.builtin').find_files, {})
 vim.keymap.set('n', '<C-p>', require('telescope.builtin').git_files, {})
-vim.keymap.set('n', '<leader>ps', function()
-    require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
-end, {})
+vim.keymap.set('n', '<leader>ps', require('telescope.builtin').grep_string, {})
 
 vim.defer_fn(function()
     require('nvim-treesitter.configs').setup {
@@ -324,15 +323,5 @@ cmp.setup {
     },
 }
 
-require('toggleterm').setup({
-    size = 40,
-    open_mapping = [[<C-\>]],
-    hide_numbers = true,
-    shade_terminals = true,
-    shading_factor = 0.6,
-    direction = 'float',
-    shell = 'zsh',
-})
-
 vim.g.zig_fmt_autosave = 0
-vim.cmd.colorscheme('everforest')
+-- vim.cmd.colorscheme('everforest')
