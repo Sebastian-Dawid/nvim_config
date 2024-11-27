@@ -4,34 +4,6 @@ vim.filetype.add({ extension = { vert = 'glsl' } })
 vim.filetype.add({ extension = { frag = 'glsl' } })
 vim.filetype.add({ extension = { comp = 'glsl' } })
 
-local colors = {
-    blue   = '#80a0ff',
-    cyan   = '#79dac8',
-    black  = '#080808',
-    white  = '#c6c6c6',
-    red    = '#ff5189',
-    violet = '#d183e8',
-    grey   = '#303030',
-}
-
-local bubbles_theme = {
-    normal = {
-        a = { fg = colors.black, bg = colors.violet },
-        b = { fg = colors.white, bg = colors.grey },
-        c = { fg = colors.white },
-    },
-
-    insert = { a = { fg = colors.black, bg = colors.blue } },
-    visual = { a = { fg = colors.black, bg = colors.cyan } },
-    replace = { a = { fg = colors.black, bg = colors.red } },
-
-    inactive = {
-        a = { fg = colors.white, bg = colors.black },
-        b = { fg = colors.white, bg = colors.black },
-        c = { fg = colors.white },
-    },
-}
-
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system {
@@ -45,29 +17,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-    {
-        "neanias/everforest-nvim",
-        version = false,
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require("everforest").setup({
-                background = "hard",
-                transparent_background_level=1,
-                italics=true,
-                disable_italic_comments=true,
-                sign_column_background="none",
-                ui_contrast="low",
-                dim_inactive_windows=false,
-                diagnostic_text_highlight=false,
-                diagnostic_virtual_text="coloured",
-                diagnostic_line_highlight=false,
-                spell_foreground=false,
-                on_highlights=function(highlight_groups, palette) end
-            })
-        end,
-    },
-
     {
         -- LSP Configuration & Plugins
         'neovim/nvim-lspconfig',
@@ -100,6 +49,8 @@ require('lazy').setup({
             'rafamadriz/friendly-snippets',
         },
     },
+
+    { "lunarvim/horizon.nvim", name = "horizon" },
 
     require 'sdawid.plugins.gitsigns',
     require 'sdawid.plugins.lualine',
@@ -168,9 +119,9 @@ require('lazy').setup({
     require 'sdawid.plugins.debug'
 }, {})
 
-vim.keymap.set('n', '<leader>pf', require('telescope.builtin').find_files, {})
-vim.keymap.set('n', '<C-p>', require('telescope.builtin').git_files, {})
-vim.keymap.set('n', '<leader>ps', require('telescope.builtin').grep_string, {})
+vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, {})
+vim.keymap.set('n', '<leader>pf', require('telescope.builtin').git_files, {})
+vim.keymap.set('n', '<leader>pg', require('telescope.builtin').live_grep, {})
 
 vim.defer_fn(function()
     require('nvim-treesitter.configs').setup {
@@ -324,4 +275,4 @@ cmp.setup {
 }
 
 vim.g.zig_fmt_autosave = 0
--- vim.cmd.colorscheme('everforest')
+vim.cmd.colorscheme('horizon')
