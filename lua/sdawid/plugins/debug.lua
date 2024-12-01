@@ -49,6 +49,7 @@ return {
         vim.keymap.set('n', '<F11>', dap.step_over, { desc = 'Debug: Step Over' })
         vim.keymap.set('n', '<F12>', dap.step_out, { desc = 'Debug: Step Out' })
         vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+        vim.keymap.set('n', '<leader>cb', function () dap.toggle_breakpoint(vim.fn.input("Condition >")) end, { desc = 'Debug: Toggle Breakpoint' })
 
         vim.keymap.set('n', '<F9>', dapui.toggle, { desc = "Debug: See last session result." })
     end

@@ -115,7 +115,49 @@ require('lazy').setup({
             "nvim-lua/plenary.nvim",
         },
     },
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "debugloop/telescope-undo.nvim",
+        },
+        config = function()
+            require("telescope").setup({
+                -- the rest of your telescope config goes here
+                extensions = {
+                    undo = {
+                        -- telescope-undo.nvim config, see below
+                    },
+                    -- other extensions:
+                    -- file_browser = { ... }
+                },
+            })
+            require("telescope").load_extension("undo")
+            -- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+        end,
+    },
+    {
+        "RaafatTurki/hex.nvim",
+        opts = {
+			-- cli command used to dump hex data
+			dump_cmd = 'xxd -g 1 -u',
 
+			-- cli command used to assemble from hex data
+			assemble_cmd = 'xxd -r',
+
+			-- function that runs on BufReadPre to determine if it's binary or not
+			is_file_binary_pre_read = function()
+				-- logic that determines if a buffer contains binary data or not
+				-- must return a bool
+			end,
+
+			-- function that runs on BufReadPost to determine if it's binary or not
+			is_file_binary_post_read = function()
+				-- logic that determines if a buffer contains binary data or not
+				-- must return a bool
+			end,
+		}
+    },
     require 'sdawid.plugins.debug'
 }, {})
 
@@ -125,13 +167,13 @@ vim.keymap.set('n', '<leader>pg', require('telescope.builtin').live_grep, {})
 
 vim.defer_fn(function()
     require('nvim-treesitter.configs').setup {
-        ensure_installed = { "c", "lua", "rust", "julia" },
+        ensure_installed = { "c", "lua", "zig", "asm", "julia" },
 
         sync_install = false,
 
         auto_install = false,
 
-        ignore_install = { "javascript", "vue" },
+        ignore_install = {},
 
         highlight = {
             enable = true,
@@ -193,7 +235,14 @@ local servers = {
         }
     },
     texlab = {},
-    zls = {}
+    ltex = {},
+    zls = {
+        cmd = { "/home/sdawid/build-from-source/zls/zig-out/bin/zls" },
+        settings = {
+            zls = {
+            }
+        }
+    }
 }
 
 local cmds = {
@@ -274,5 +323,4 @@ cmp.setup {
     },
 }
 
-vim.g.zig_fmt_autosave = 0
 vim.cmd.colorscheme('horizon')
