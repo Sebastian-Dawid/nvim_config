@@ -4,20 +4,21 @@
 
 -- stylua: ignore
 local colors = {
-    blue   = '#80a0ff',
-    cyan   = '#79dac8',
-    black  = '#080808',
-    white  = '#c6c6c6',
-    red    = '#ff5189',
-    violet = '#d183e8',
-    grey   = '#303030',
+    blue   = '#bfdaff',
+    cyan   = '#eaffc0',
+    black  = '#000004',
+    white  = '#f8f8ff',
+    red    = '#ff3600',
+    violet = '#635196',
+    dark_violet = '#020221',
+    grey   = '#151521',
 }
 
 local bubbles_theme = {
     normal = {
-        a = { fg = colors.black, bg = colors.violet },
-        b = { fg = colors.white, bg = colors.grey },
-        c = { fg = colors.white },
+        a = { fg = colors.white, bg = colors.dark_violet },
+        b = { fg = colors.white, bg = colors.dark_violet },
+        c = { fg = colors.white, bg = colors.grey },
     },
 
     insert = { a = { fg = colors.black, bg = colors.blue } },
@@ -27,7 +28,7 @@ local bubbles_theme = {
     inactive = {
         a = { fg = colors.white, bg = colors.black },
         b = { fg = colors.white, bg = colors.black },
-        c = { fg = colors.white },
+        c = { fg = colors.white, bg = colors.grey },
     },
 }
 
@@ -54,7 +55,7 @@ return {
             section_separators = { left = '', right = '' },
         },
         sections = {
-            lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
+            lualine_a = { { 'mode', right_padding = 2 } },
             lualine_b = {
                 {
                     'filename' ,
@@ -101,7 +102,7 @@ return {
                         return msg
                     end,
                     icon = ' LSP:',
-                    color = { fg = '#ffffff', gui = 'bold' },
+                    color = { fg = '#ffffff', gui = 'bold', },
                 }
             },
             lualine_x = {},
@@ -133,7 +134,7 @@ return {
                 }
             },
             lualine_z = {
-                { 'location', separator = { right = '' }, left_padding = 2 },
+                { 'location', left_padding = 2 },
             },
         },
         inactive_sections = {

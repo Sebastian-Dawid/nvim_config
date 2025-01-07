@@ -50,7 +50,7 @@ require('lazy').setup({
         },
     },
 
-    { "lunarvim/horizon.nvim", name = "horizon" },
+    { 'fenetikm/falcon' },
 
     require 'sdawid.plugins.gitsigns',
     require 'sdawid.plugins.lualine',
@@ -323,4 +323,4 @@ cmp.setup {
     },
 }
 
-vim.cmd.colorscheme('horizon')
+vim.cmd.colorscheme('falcon')
