@@ -3,6 +3,7 @@ vim.filetype.add({ extension = { hip = 'cpp' } })
 vim.filetype.add({ extension = { vert = 'glsl' } })
 vim.filetype.add({ extension = { frag = 'glsl' } })
 vim.filetype.add({ extension = { comp = 'glsl' } })
+vim.filetype.add({ extension = { slang = 'shaderslang' } })
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -34,6 +35,8 @@ require('lazy').setup({
         },
     },
 
+    { 'danilo-augusto/vim-afterglow' },
+
     {
         -- Autocompletion
         'hrsh7th/nvim-cmp',
@@ -49,8 +52,6 @@ require('lazy').setup({
             'rafamadriz/friendly-snippets',
         },
     },
-
-    { 'fenetikm/falcon' },
 
     require 'sdawid.plugins.gitsigns',
     require 'sdawid.plugins.lualine',
@@ -183,7 +184,7 @@ vim.defer_fn(function()
     }
 end, 0)
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     local nmap = function(keys, func, desc)
         if desc then
             desc = 'LSP: ' .. desc
@@ -274,6 +275,16 @@ mason_lspconfig.setup_handlers {
 
 require('lspconfig').glsl_analyzer.setup{}
 
+require('lspconfig').slangd.setup{
+    settings = {
+        slang = {
+            cmd = { "slangd" },
+            filetypes = { "shaderslang", "hlsl" },
+            single_file_support = true,
+        }
+    }
+}
+
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
@@ -323,4 +334,4 @@ cmp.setup {
     },
 }
 
-vim.cmd.colorscheme('falcon')
+vim.cmd.colorscheme('afterglow')
