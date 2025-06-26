@@ -247,7 +247,7 @@ local servers = {
 }
 
 local cmds = {
-    clangd = { "clangd", "--header-insertion=never" },
+    clangd = { "/usr/bin/clangd", "--header-insertion=never" },
 }
 
 require('neodev').setup()
