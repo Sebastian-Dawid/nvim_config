@@ -59,6 +59,7 @@ require('lazy').setup({
 					return vim.fn.executable 'make' == 1
 				end,
 			},
+			{ "nvim-tree/nvim-web-devicons", opts = {} },
 		},
 	},
 
@@ -98,32 +99,12 @@ require('lazy').setup({
 			"nvim-lua/plenary.nvim",
 		},
 	},
-	{
-		"nvim-telescope/telescope.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"debugloop/telescope-undo.nvim",
-		},
-		config = function()
-			require("telescope").setup({
-				-- the rest of your telescope config goes here
-				extensions = {
-					undo = {
-						-- telescope-undo.nvim config, see below
-					},
-					-- other extensions:
-					-- file_browser = { ... }
-				},
-			})
-			require("telescope").load_extension("undo")
-			-- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
-		end,
-	},
 	require 'sdawid.plugins.debug'
 }, {})
 
 vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, {})
 vim.keymap.set('n', '<leader>pf', require('telescope.builtin').git_files, {})
+vim.keymap.set('n', '<leader>pb', require('telescope.builtin').buffers, {})
 vim.keymap.set('n', '<leader>pg', require('telescope.builtin').live_grep, {})
 
 vim.defer_fn(function()
