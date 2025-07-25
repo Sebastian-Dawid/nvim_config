@@ -7,13 +7,13 @@ vim.filetype.add({ extension = { slang = 'shaderslang' } })
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.loop or vim.uv).fs_stat(lazypath) then
-    vim.fn.system {
-        'git',
-        'clone', '--filter=blob:none',
-        'https://github.com/folke/lazy.nvim.git',
-        '--branch=stable', -- latest stable release
-        lazypath,
-    }
+	vim.fn.system {
+		'git',
+		'clone', '--filter=blob:none',
+		'https://github.com/folke/lazy.nvim.git',
+		'--branch=stable', -- latest stable release
+		lazypath,
+	}
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -21,105 +21,105 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 require('lazy').setup({
-    {
-        "mason-org/mason-lspconfig.nvim",
-        opts = {},
-        dependencies = {
-            { "mason-org/mason.nvim", opts = {} },
-            "neovim/nvim-lspconfig",
-        },
-    },
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {},
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
+			"neovim/nvim-lspconfig",
+		},
+	},
 
-    require 'sdawid.plugins.lazydev',
+	require 'sdawid.plugins.lazydev',
 
-    { 'j-hui/fidget.nvim', opts = {} },
-    { 'danilo-augusto/vim-afterglow' },
+	{ 'j-hui/fidget.nvim',           opts = {} },
+	{ 'danilo-augusto/vim-afterglow' },
 
-    require 'sdawid.plugins.gitsigns',
-    require 'sdawid.plugins.lualine',
+	require 'sdawid.plugins.gitsigns',
+	require 'sdawid.plugins.lualine',
 
-    -- "gc" to comment visual regions/lines
-    { 'numToStr/Comment.nvim', opts = {} },
+	-- "gc" to comment visual regions/lines
+	{ 'numToStr/Comment.nvim', opts = {} },
 
-    -- Fuzzy Finder (files, lsp, etc)
-    {
-        'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-            -- Only load if `make` is available. Make sure you have the system
-            -- requirements installed.
-            {
-                'nvim-telescope/telescope-fzf-native.nvim',
-                -- NOTE: If you are having trouble with this installation,
-                --       refer to the README for telescope-fzf-native for more instructions.
-                build = 'make',
-                cond = function()
-                    return vim.fn.executable 'make' == 1
-                end,
-            },
-        },
-    },
+	-- Fuzzy Finder (files, lsp, etc)
+	{
+		'nvim-telescope/telescope.nvim',
+		branch = '0.1.x',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			-- Fuzzy Finder Algorithm which requires local dependencies to be built.
+			-- Only load if `make` is available. Make sure you have the system
+			-- requirements installed.
+			{
+				'nvim-telescope/telescope-fzf-native.nvim',
+				-- NOTE: If you are having trouble with this installation,
+				--       refer to the README for telescope-fzf-native for more instructions.
+				build = 'make',
+				cond = function()
+					return vim.fn.executable 'make' == 1
+				end,
+			},
+		},
+	},
 
-    {
-        -- Highlight, edit, and navigate code
-        'nvim-treesitter/nvim-treesitter',
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter-textobjects',
-        },
-        build = ':TSUpdate',
-    },
+	{
+		-- Highlight, edit, and navigate code
+		'nvim-treesitter/nvim-treesitter',
+		dependencies = {
+			'nvim-treesitter/nvim-treesitter-textobjects',
+		},
+		build = ':TSUpdate',
+	},
 
-    -- Not sure if I want to keep this one...
-    {
-        -- Add indentation guides even on blank lines
-        'lukas-reineke/indent-blankline.nvim',
-        -- Enable `lukas-reineke/indent-blankline.nvim`
-        -- See `:help ibl`
-        main = 'ibl',
-        opts = {},
-    },
+	-- Not sure if I want to keep this one...
+	{
+		-- Add indentation guides even on blank lines
+		'lukas-reineke/indent-blankline.nvim',
+		-- Enable `lukas-reineke/indent-blankline.nvim`
+		-- See `:help ibl`
+		main = 'ibl',
+		opts = {},
+	},
 
-    {
-        "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        }
-    },
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		}
+	},
 
-    {
-        "kdheepak/lazygit.nvim",
-        -- optional for floating window border decoration
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-    },
-    {
-        "nvim-telescope/telescope.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "debugloop/telescope-undo.nvim",
-        },
-        config = function()
-            require("telescope").setup({
-                -- the rest of your telescope config goes here
-                extensions = {
-                    undo = {
-                        -- telescope-undo.nvim config, see below
-                    },
-                    -- other extensions:
-                    -- file_browser = { ... }
-                },
-            })
-            require("telescope").load_extension("undo")
-            -- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
-        end,
-    },
-    require 'sdawid.plugins.debug'
+	{
+		"kdheepak/lazygit.nvim",
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
+	{
+		"nvim-telescope/telescope.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"debugloop/telescope-undo.nvim",
+		},
+		config = function()
+			require("telescope").setup({
+				-- the rest of your telescope config goes here
+				extensions = {
+					undo = {
+						-- telescope-undo.nvim config, see below
+					},
+					-- other extensions:
+					-- file_browser = { ... }
+				},
+			})
+			require("telescope").load_extension("undo")
+			-- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+		end,
+	},
+	require 'sdawid.plugins.debug'
 }, {})
 
 vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, {})
@@ -127,21 +127,21 @@ vim.keymap.set('n', '<leader>pf', require('telescope.builtin').git_files, {})
 vim.keymap.set('n', '<leader>pg', require('telescope.builtin').live_grep, {})
 
 vim.defer_fn(function()
-    require('nvim-treesitter.configs').setup {
-        ensure_installed = { "c", "lua", "zig", "asm", "julia" },
+	require('nvim-treesitter.configs').setup {
+		ensure_installed = { "c", "lua", "zig", "asm", "julia" },
 
-        sync_install = false,
+		sync_install = false,
 
-        auto_install = false,
+		auto_install = false,
 
-        ignore_install = {},
+		ignore_install = {},
 
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-        },
-        modules = {},
-    }
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = false,
+		},
+		modules = {},
+	}
 end, 0)
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -170,7 +170,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 		nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 		nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-		vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { buffer = args.buf, desc = 'Signature Documentation' })
+		-- use <C-s> for signature help in insert mode, that is the default and makes more sense than <C-h>
+		-- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { buffer = args.buf, desc = 'Signature Documentation' })
 
 		nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 		nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
@@ -187,31 +188,31 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 
 local servers = {
-    clangd = {},
-    rust_analyzer = {},
-    julials = {},
-    lua_ls = {},
-    texlab = {},
-    ltex = {},
-    zls = {}
+	clangd = {},
+	rust_analyzer = {},
+	julials = {},
+	lua_ls = {},
+	texlab = {},
+	ltex = {},
+	zls = {}
 }
 
 local mason_lspconfig = require 'mason-lspconfig'
 mason_lspconfig.setup {
-    ensure_installed = vim.tbl_keys(servers),
-    automatic_enable = true,
+	ensure_installed = vim.tbl_keys(servers),
+	automatic_enable = true,
 }
 
 local lspconfig = require('lspconfig')
-lspconfig.glsl_analyzer.setup{}
-lspconfig.slangd.setup{
-    settings = {
-        slang = {
-            cmd = { "slangd" },
-            filetypes = { "shaderslang", "hlsl" },
-            single_file_support = true,
-        }
-    }
+lspconfig.glsl_analyzer.setup {}
+lspconfig.slangd.setup {
+	settings = {
+		slang = {
+			cmd = { "slangd" },
+			filetypes = { "shaderslang", "hlsl" },
+			single_file_support = true,
+		}
+	}
 }
 
 vim.lsp.config('clangd', {
@@ -220,10 +221,10 @@ vim.lsp.config('clangd', {
 })
 
 vim.lsp.config('lua_ls', {
-        Lua = {
-            workspace = { checkThirdParty = false },
-            telemetry = { enable = false }
-        }
+	Lua = {
+		workspace = { checkThirdParty = false },
+		telemetry = { enable = false }
+	}
 })
 
 vim.lsp.inlay_hint.enable()
