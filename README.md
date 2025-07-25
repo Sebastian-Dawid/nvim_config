@@ -19,6 +19,7 @@ Binding | Function | Mode
 `<leader>ds` | list all symbols in the current buffer | Normal
 `<leader>ws` | list all symbols in the current workspace | Normal
 `K` | show the documentation of the currently hovered symbol | Normal
+`<leader>sd` | show diagnostics for the current line | Normal
 `<leader>pv` | open Netrw in the directory of the current file | Normal
 `J` | move the selected block down one line | Visual
 `K` | move the selected block up one line | Visual

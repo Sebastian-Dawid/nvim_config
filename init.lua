@@ -154,6 +154,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		-- use <C-s> for signature help in insert mode, that is the default and makes more sense than <C-h>
 		-- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, { buffer = args.buf, desc = 'Signature Documentation' })
 
+		nmap('<leader>sd', vim.diagnostic.open_float, '[S]ow [D]iagnostics')
 
 		vim.api.nvim_buf_create_user_command(args.buf, 'Format', function(_)
 			vim.lsp.buf.format()
@@ -203,5 +204,7 @@ vim.lsp.config('lua_ls', {
 })
 
 vim.lsp.inlay_hint.enable()
+
+vim.diagnostic.config({ virtual_text = true })
 
 vim.cmd.colorscheme('afterglow')
