@@ -32,7 +32,8 @@ require('lazy').setup({
 
 	require 'sdawid.plugins.lazydev',
 
-	{ 'j-hui/fidget.nvim',           opts = {} },
+	{ 'j-hui/fidget.nvim', opts = {} },
+	{ 'xiyaowong/transparent.nvim', opts = {} },
 	{ 'danilo-augusto/vim-afterglow' },
 
 	require 'sdawid.plugins.gitsigns',
@@ -79,7 +80,9 @@ require('lazy').setup({
 		-- Enable `lukas-reineke/indent-blankline.nvim`
 		-- See `:help ibl`
 		main = 'ibl',
-		opts = {},
+		opts = {
+			scope = { enabled = false },
+		},
 	},
 
 	{
@@ -166,7 +169,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local servers = {
 	clangd = {},
 	rust_analyzer = {},
-	julials = {},
 	lua_ls = {},
 	texlab = {},
 	ltex = {},
@@ -203,7 +205,12 @@ vim.lsp.config('lua_ls', {
 	}
 })
 
-vim.lsp.inlay_hint.enable()
+lspconfig.wgsl_analyzer.setup({
+	cmd = { "wgsl_analyzer" },
+	filetypes = { 'wgsl', 'wesl' }
+})
+
+lspconfig.julials.setup({})
 
 vim.diagnostic.config({ virtual_text = true })
 
